@@ -8,6 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+/*interface JokeReport {
+    joke: string;
+    score: number;
+    date: string;
+  }*/
 const API_URL = 'https://icanhazdadjoke.com/';
 function obtenerAcudit() {
     return __awaiter(this, void 0, void 0, function* () {
