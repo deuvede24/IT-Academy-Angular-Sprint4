@@ -7,12 +7,12 @@ body {
     font-size: 18px;
   }
   
-  #següent-acudit {
+  #next-joke {
     background-color: #00b4d8;
     border-color: #00b4d8;
   }
   
-  #següent-acudit:hover {
+  #next-joke  {
     background-color: #0096c7;
   }
   

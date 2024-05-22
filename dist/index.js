@@ -8,20 +8,59 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-/*interface JokeReport {
-    joke: string;
-    score: number;
-    date: string;
-  }*/
+//Ex.1&2
 const API_URL = 'https://icanhazdadjoke.com/';
-function obtenerAcudit() {
+function getDadJoke() {
     return __awaiter(this, void 0, void 0, function* () {
-        const respuesta = yield fetch(API_URL, {
-            headers: {
-                'Accept': 'application/json'
+        try {
+            const respuesta = yield fetch(API_URL, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            console.log(respuesta);
+            if (!respuesta.ok) {
+                throw new Error(`Error fetching joke: ${respuesta.statusText}`);
             }
-        });
-        const datos = yield respuesta.json();
-        return datos.joke;
+            const data = yield respuesta.json();
+            return data;
+        }
+        catch (error) {
+            console.error("There are no jokes to show!", error);
+            throw error;
+        }
     });
+}
+// Función para mostrar la siguiente broma
+function showNextDadJoke() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const joke = yield getDadJoke();
+            showDadJokeInDOM(joke); // Mostrar la broma en el DOM
+        }
+        catch (error) {
+            console.error("Failed to show next joke!", error);
+        }
+    });
+}
+function showDadJokeInDOM(joke) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const jokeElement = document.getElementById('joke');
+            if (jokeElement && joke && joke.joke) { // Verificar si hay un elemento de broma y si el chiste no es undefined
+                jokeElement.textContent = joke.joke;
+            }
+        }
+        catch (error) {
+            console.error("Failed to get and show dad joke:", error);
+        }
+    });
+}
+// Llamada a la función para mostrar la broma en el DOM
+showDadJokeInDOM();
+try {
+    showNextDadJoke();
+}
+catch (error) {
+    console.error("Failed to show initial joke:", error);
 }
