@@ -31,19 +31,71 @@ function getDadJoke() {
         }
     });
 }
-// Función para mostrar la siguiente broma
-function showNextDadJoke() {
+//Ex5
+function getChuckNorrisJoke() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const joke = yield getDadJoke();
-            showDadJokeInDOM(joke); // Mostrar la broma en el DOM
+            const response = yield fetch('https://api.chucknorris.io/jokes/random');
+            if (!response.ok) {
+                throw new Error(`Error fetching Chuck Norris joke: ${response.statusText}`);
+            }
+            const data = yield response.json();
+            console.log("Response from Chuck Norris API:", data); // Mostrar los datos de la respuesta en la consola
+            const jokeData = {
+                id: data.id,
+                joke: data.value,
+                status: 200 // La API de Chuck Norris no proporciona un código de estado, por lo que establecemos uno arbitrario
+            };
+            return jokeData;
+        }
+        catch (error) {
+            console.error('There are no Chuck Norris jokes to show!', error);
+            throw error;
+        }
+    });
+}
+function fetchJoke() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const randomNumber = Math.random();
+        if (randomNumber < 0.5) { // 50% de probabilidad para cada API
+            return getDadJoke();
+        }
+        else {
+            return getChuckNorrisJoke();
+        }
+    });
+}
+function showNextJoke() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const joke = yield fetchJoke();
+            showJokeInDOM(joke);
         }
         catch (error) {
             console.error("Failed to show next joke!", error);
         }
     });
 }
-function showDadJokeInDOM(joke) {
+// Función para mostrar la siguiente broma
+/*async function showNextDadJoke() {
+    try {
+        const joke = await getDadJoke();
+        showDadJokeInDOM(joke); // Mostrar la broma en el DOM
+    } catch (error) {
+        console.error("Failed to show next joke!", error);
+    }
+}*/
+/*async function showDadJokeInDOM(joke?: Joke) {
+    try {
+        const jokeElement = document.getElementById('joke');
+        if (jokeElement && joke && joke.joke) { // Verificar si hay un elemento de broma y si el chiste no es undefined
+            jokeElement.textContent = joke.joke;
+        }
+    } catch (error) {
+        console.error("Failed to get and show dad joke:", error);
+    }
+}*/
+function showJokeInDOM(joke) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const jokeElement = document.getElementById('joke');
@@ -58,8 +110,13 @@ function showDadJokeInDOM(joke) {
 }
 // Llamada a la función para mostrar la broma en el DOM
 //showDadJokeInDOM();
-try {
+/*try {
     showNextDadJoke();
+} catch (error) {
+    console.error("Failed to show initial joke:", error);
+}*/
+try {
+    showNextJoke();
 }
 catch (error) {
     console.error("Failed to show initial joke:", error);
@@ -112,23 +169,11 @@ function assignScoreButtonEvents() {
             scoreButton.onclick = () => handleScoreButtonClick(i);
         }
     }
-}
-/*function assignScoreButtonEvents() {
-    // Iterar sobre cada número del 1 al 3
-    for (let i = 1; i <= 3; i++) {
-        // Obtener el botón de puntuación por su ID
-        const scoreButton = document.getElementById(`score-button-${i}`);
-        // Verificar si el botón existe
-        if (scoreButton) {
-            // Asignar el evento onclick al botón
-            scoreButton.onclick = () => {
-                // Obtener la puntuación del botón mediante el atributo de datos
-                const score = parseInt(scoreButton.dataset.score || "0");
-                voteJoke(score);
-            };
-        }
+    const nextJokeButton = document.getElementById('next-joke-button');
+    if (nextJokeButton) {
+        nextJokeButton.onclick = showNextJoke;
     }
-}*/
+}
 /* Función para mostrar un chiste en el DOM
 async function showDadJokeInDOM(joke?: string): Promise<void> {
     try {
@@ -141,26 +186,107 @@ async function showDadJokeInDOM(joke?: string): Promise<void> {
     }
 }*/
 // Obtener un nuevo chiste y mostrarlo en el DOM al cargar la página
-function getAndShowDadJoke() {
+/*async function getAndShowDadJoke(): Promise<void> {
+    try {
+        const response = await fetch('https://icanhazdadjoke.com/', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const data = await response.json();
+        if (data && data.joke) {
+            showDadJokeInDOM(data.joke);
+        } else {
+            throw new Error('Failed to fetch joke or joke is empty.');
+        }
+    } catch (error) {
+        console.error("Failed to fetch dad joke:", error);
+    }
+}
+
+// Llamar a la función para obtener y mostrar un chiste al cargar la página
+getAndShowDadJoke();*/
+const API_KEY = 'c993b94e24ffc37cf8882f0070c4b1e6';
+const CITY = "Barcelona";
+function fetchWeather() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch('https://icanhazdadjoke.com/', {
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-            const data = yield response.json();
-            if (data && data.joke) {
-                showDadJokeInDOM(data.joke);
+            const response = yield fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const weatherData = yield response.json();
+            const temperature = weatherData.main.temp;
+            const iconCode = weatherData.weather[0].icon;
+            const weatherText = document.getElementById('weather-text');
+            const weatherIcon = document.getElementById('weather-icon');
+            ;
+            if (weatherText && weatherIcon) {
+                weatherText.innerText = `${temperature}°C`;
+                weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                weatherIcon.style.display = 'block';
             }
             else {
-                throw new Error('Failed to fetch joke or joke is empty.');
+                throw new Error('Weather elements not found');
             }
         }
         catch (error) {
-            console.error("Failed to fetch dad joke:", error);
+            const weatherText = document.getElementById('weather-text');
+            if (weatherText) {
+                weatherText.innerText = 'Error al cargar la información meteorológica';
+            }
+            console.error('Error fetching weather:', error);
         }
     });
 }
-// Llamar a la función para obtener y mostrar un chiste al cargar la página
-getAndShowDadJoke();
+fetchWeather();
+document.addEventListener("DOMContentLoaded", function (event) {
+    // Este código se ejecutará cuando el DOM esté completamente cargado
+    // Puedes colocar aquí el código que intenta acceder al elemento 'weather-icon'
+    const weatherIcon = document.getElementById('weather-icon');
+    if (weatherIcon) {
+        // Aquí puedes realizar cualquier acción que necesites con el elemento 'weather-icon'
+        console.log('El elemento weather-icon se encontró en el DOM.');
+    }
+    else {
+        console.error('El elemento weather-icon no se encontró en el DOM.');
+    }
+    assignScoreButtonEvents();
+    fetchWeather();
+});
+//Ex6.
+/*const imagesArray: string[] = [
+    "blob-haikei.svg", "blob-haikei(1).svg", "blob-haikei(2).svg", "blob-haikei(3).svg",
+];
+
+let imagesIndex: number = 0;
+
+function changeBackground(): void {
+    imagesIndex += 1;
+    const nextImage: string = `blob/${imagesArray[imagesIndex % imagesArray.length]}.svg`;
+    const changeBackground: HTMLElement | null = document.getElementById('changeBg');
+
+    if (changeBackground) {
+        changeBackground.style.backgroundImage = `url('${nextImage}')`;
+    }
+}*/
+const shapes = [
+    "blob-haikei.svg",
+    "blob-haikei(1).svg",
+    "blob-haikei(2).svg",
+    "blob-haikei(3).svg",
+];
+// Función para cambiar el fondo
+function changeBackground() {
+    // Obtener un índice aleatorio para seleccionar una imagen de fondo
+    const randomIndex = Math.floor(Math.random() * shapes.length);
+    // Obtener la ruta de la imagen de fondo seleccionada
+    const selectedShape = shapes[randomIndex];
+    // Cambiar el fondo del contenedor
+    const changeBackground = document.getElementById('changeBg');
+    if (changeBackground) {
+        changeBackground.style.backgroundImage = `url('images/${selectedShape}')`;
+    }
+}
+// Llamar a la función para cambiar el fondo
+changeBackground();
