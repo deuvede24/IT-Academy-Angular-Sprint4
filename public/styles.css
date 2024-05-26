@@ -15,4 +15,15 @@ body {
   #next-joke  {
     background-color: #0096c7;
   }
+  .background-container {
+    position: fixed; /* Para fijar el contenedor en la ventana del navegador */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Para que esté detrás del contenido principal */
+    /* Otras propiedades de estilo para el fondo, como el color de fondo o las propiedades de la imagen, pueden ser agregadas aquí */
+  }
+  
+  /* Otros estilos para el contenido principal de tu página */
   
