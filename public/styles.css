@@ -1,29 +1,30 @@
 body {
     font-family: Arial, sans-serif;
-  }
- 
-  
-  .joke {
+}
+
+
+.joke {
     font-size: 18px;
-  }
-  
-  #next-joke {
+}
+
+#next-joke {
     background-color: #00b4d8;
     border-color: #00b4d8;
-  }
-  
-  #next-joke  {
+}
+
+#next-joke {
     background-color: #0096c7;
-  }
-  .background-container {
-    position: fixed; /* Para fijar el contenedor en la ventana del navegador */
+}
+
+.background-container {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Para que esté detrás del contenido principal */
-    /* Otras propiedades de estilo para el fondo, como el color de fondo o las propiedades de la imagen, pueden ser agregadas aquí */
-  }
-  
-  /* Otros estilos para el contenido principal de tu página */
-  
+    z-index: -1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: none;
+}

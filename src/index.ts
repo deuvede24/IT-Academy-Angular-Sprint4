@@ -90,7 +90,7 @@ async function showNextJoke() {
     } catch (error) {
         console.error("Failed to get and show dad joke:", error);
     }
-}*/ 
+}*/
 async function showJokeInDOM(joke?: Joke) {
     try {
         const jokeElement = document.getElementById('joke');
@@ -249,7 +249,65 @@ async function fetchWeather(): Promise<void> {
 fetchWeather();
 
 
-document.addEventListener("DOMContentLoaded", function(event) {
+
+/* Función para cambiar el fondo
+function changeBackground() {
+    // Obtener un índice aleatorio para seleccionar una imagen de fondo
+    const randomIndex = Math.floor(Math.random() * shapes.length);
+    // Obtener la ruta de la imagen de fondo seleccionada
+    const selectedShape = shapes[randomIndex];
+    // Cambiar el fondo del contenedor
+    const changeBackground = document.getElementById('changeBg');
+    if (changeBackground) {
+        changeBackground.style.backgroundImage = `url('images/${selectedShape}')`;
+    }
+}
+
+// Llamar a la función para cambiar el fondo
+changeBackground();*/
+const shapes: string[] = [
+    "blob1.svg",
+    "blob2.svg",
+    "blob3.svg",
+    "blob4.svg",
+];
+/*function changeBackground() {
+    const randomIndex = Math.floor(Math.random() * shapes.length);
+    const selectedShape = shapes[randomIndex];
+    const changeBackground = document.getElementById('changeBg');
+    if (changeBackground) {
+        changeBackground.style.backgroundImage = `url('images/${selectedShape}')`;
+    }
+}*/
+function changeBackground() {
+    console.log('Cambiar fondo llamado'); // Verifica si la función se está llamando correctamente
+    const randomIndex = Math.floor(Math.random() * shapes.length);
+    const selectedShape = shapes[randomIndex];
+    console.log('Imagen seleccionada:', selectedShape); // Verifica la imagen seleccionada
+    const changeBackground = document.getElementById('changeBg');
+    if (changeBackground) {
+        changeBackground.style.backgroundImage = `url('images/${selectedShape}')`;
+        console.log('Imagen de fondo cambiada correctamente'); // Verifica si se estableció la imagen de fondo correctamente
+    }
+}
+
+/*let shapeIndex: number = 0;
+
+function changeImage(): void {
+
+    shapeIndex += 1;
+    let nextBlob: string = `images/${shapes[shapeIndex]}.svg`;
+    let changeBackground: HTMLElement | null = document.getElementById('changeBg');
+
+    if (changeBackground) {
+        changeBackground.style.backgroundImage = `url('${nextBlob}')`;
+    }
+    shapeIndex === shapes.length - 1 ?
+        shapeIndex = -1 : shapeIndex = shapeIndex;
+}
+*/
+
+document.addEventListener("DOMContentLoaded", function (event) {
     // Este código se ejecutará cuando el DOM esté completamente cargado
     // Puedes colocar aquí el código que intenta acceder al elemento 'weather-icon'
     const weatherIcon = document.getElementById('weather-icon');
@@ -262,6 +320,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     assignScoreButtonEvents();
     fetchWeather();
+    //changeBackground();
+    changeImage()
 });
 
 
@@ -282,27 +342,6 @@ function changeBackground(): void {
     }
 }*/
 
-const shapes = [
-    "blob-haikei.svg", 
-    "blob-haikei(1).svg", 
-    "blob-haikei(2).svg", 
-    "blob-haikei(3).svg",
-];
-// Función para cambiar el fondo
-function changeBackground() {
-    // Obtener un índice aleatorio para seleccionar una imagen de fondo
-    const randomIndex = Math.floor(Math.random() * shapes.length);
-    // Obtener la ruta de la imagen de fondo seleccionada
-    const selectedShape = shapes[randomIndex];
-    // Cambiar el fondo del contenedor
-    const changeBackground = document.getElementById('changeBg');
-    if (changeBackground) {
-        changeBackground.style.backgroundImage = `url('images/${selectedShape}')`;
-    }
-}
-
-// Llamar a la función para cambiar el fondo
-changeBackground();
 
 
 
