@@ -282,5 +282,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
     assignScoreButtonEvents();
     fetchWeather();
-   // changeBackground();
+    changeBackground();
 });
