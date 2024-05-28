@@ -5,6 +5,7 @@ body {
   
   .joke {
     font-size: 20px;
+    word-wrap: break-word;
   }
   
   #next-joke {
@@ -39,6 +40,9 @@ body {
   border-radius: 10px;
   max-width: 600px; /* Limitar el ancho máximo del contenedor */
   width: 100%; /* Hacer que el contenedor tome todo el ancho disponible */
+  overflow-wrap: break-word; /* Permitir división de palabras largas */
+  word-wrap: break-word;
+
 }
 
   .background-container {
