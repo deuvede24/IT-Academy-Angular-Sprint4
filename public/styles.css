@@ -4,7 +4,7 @@ body {
  
   
   .joke {
-    font-size: 18px;
+    font-size: 20px;
   }
   
   #next-joke {
@@ -23,7 +23,7 @@ body {
     position: fixed;
     top: 10px;
     left: 10px;
-    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+    z-index: 1000; /* Posicionar por encima de otros elementos */
   }
   #weather-icon {
     margin-right: 10px; /* Agregamos margen a la derecha para separar el icono del texto */
@@ -32,14 +32,13 @@ body {
 
 
 #acudit-container {
-  z-index: 1; /* Asegúrate de que esté delante del contenedor de fondo */
+  z-index: 1; /* Posicionar delante del contenedor de fondo */
   position: relative; /* Para asegurarnos de que el z-index se aplique correctamente */
-  background-color: transparent; /* Fondo blanco semi-transparente para que el texto sea legible */
-  padding: 20px; /* Añadir un poco de relleno */
-  border-radius: 10px; /* Añadir bordes redondeados */
+  background-color: transparent; /* Fondo transparente para que el texto sea legible */
+  padding: 20px; 
+  border-radius: 10px;
   max-width: 600px; /* Limitar el ancho máximo del contenedor */
   width: 100%; /* Hacer que el contenedor tome todo el ancho disponible */
- /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añadir una sombra para que destaque sobre el fondo */
 }
 
   .background-container {
@@ -51,7 +50,6 @@ body {
     background-size: cover;
     background-position: center;
     z-index: -1; /* Para que esté detrás del contenido principal */
-    /* Otras propiedades de estilo para el fondo, como el color de fondo o las propiedades de la imagen, pueden ser agregadas aquí */
     background-color: rgba(255, 255, 255, 0);
   }
 
@@ -61,6 +59,6 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2; /* Asegúrate de que esté detrás de todos los demás elementos */
-    object-fit: cover; /* Para asegurar que la imagen se ajuste al contenedor */
+    z-index: -2; /* Posicionar detrás de todos los demás elementos */
+    object-fit: cover; /* Asegurar que la imagen se ajuste al contenedor */
 }
