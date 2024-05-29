@@ -116,17 +116,17 @@ function voteJoke(score: number) {
         const jokeElement = document.getElementById('joke'); //obtener el joke
         if (jokeElement) {
             const jokeText = jokeElement.textContent || '';
-            const currentJokeIndex = reportJokes.findIndex(report => report.joke === jokeText); 
+            const currentJokeIndex = reportJokes.findIndex(report => report.joke === jokeText); //busco en el array reportJokes que joke actual coincida con el texto
             const joke = currentJokeIndex !== -1 ? reportJokes[currentJokeIndex] : null; //verificar si el chiste actual ya existe en el array reportJokes
 
-            if (joke) {
-                joke.score = score;//asigno el valor de score
+            if (joke) { //si joke ya existe entonces acutalizo solo el score
+                joke.score = score;
                 console.log('Joke valorado:', joke);
                 console.log('Contenido del array reportJokes:', reportJokes);
-            } else {
+            } else { //si joke no existe en el array reportJokes aún creo un nuevo reporData con todos los datos
                 const date = new Date().toISOString();
                 const reportData: JokeReport = { joke: jokeText, score: score, date: date };
-                reportJokes.push(reportData); //hago push al array 
+                reportJokes.push(reportData); //hago push al array reporData con datos que tengo
                 console.log('Joke valorado:', reportData);
                 console.log('Contenido del array reportJokes:', reportJokes);
             }
