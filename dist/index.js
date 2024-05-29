@@ -65,6 +65,7 @@ function fetchJoke() {
         }
     });
 }
+//Ex6.
 const shapes = [
     "blob1.svg",
     "blob2.svg",
@@ -96,30 +97,11 @@ function showNextJoke() {
         }
     });
 }
-// Función para mostrar la siguiente broma
-/*async function showNextDadJoke() {
-    try {
-        const joke = await getDadJoke();
-        showDadJokeInDOM(joke); // Mostrar la broma en el DOM
-    } catch (error) {
-        console.error("Failed to show next joke!", error);
-    }
-}*/
-/*async function showDadJokeInDOM(joke?: Joke) {
-    try {
-        const jokeElement = document.getElementById('joke');
-        if (jokeElement && joke && joke.joke) { // Verificar si hay un elemento de broma y si el chiste no es undefined
-            jokeElement.textContent = joke.joke;
-        }
-    } catch (error) {
-        console.error("Failed to get and show dad joke:", error);
-    }
-}*/
 function showJokeInDOM(joke) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const jokeElement = document.getElementById('joke');
-            if (jokeElement && joke && joke.joke) { // Verificar si hay un elemento de broma y si el chiste no es undefined
+            if (jokeElement && joke && joke.joke) { // Verificar si hay un elemento de joke y que no sea undefined
                 jokeElement.textContent = joke.joke;
             }
         }
@@ -128,34 +110,29 @@ function showJokeInDOM(joke) {
         }
     });
 }
-// Llamada a la función para mostrar la broma en el DOM
-//showDadJokeInDOM();
-/*try {
-    showNextDadJoke();
-} catch (error) {
-    console.error("Failed to show initial joke:", error);
-}*/
-try {
-    showNextJoke();
-    changeBackground();
-}
-catch (error) {
-    console.error("Failed to show initial joke:", error);
-}
+//EX3.
 // Array para almacenar los datos de los chistes valorados
 let reportJokes = [];
-// Función para manejar la votación de un chiste
+//Función que vota los chistes
 function voteJoke(score) {
     try {
-        // Obtener el chiste actual del DOM
-        const jokeElement = document.getElementById('joke');
+        const jokeElement = document.getElementById('joke'); //obtener el joke
         if (jokeElement) {
             const jokeText = jokeElement.textContent || '';
-            const date = new Date().toISOString(); // Obtener la fecha en formato ISO
-            const reportData = { joke: jokeText, score: score, date: date }; // Crear el objeto de reporte
-            reportJokes.push(reportData); // Agregar el objeto al array reportAcudits
-            console.log('Joke valorado:', reportData); // Mostrar el reporte en la consola
-            console.log('Contenido del array reportJokes:', reportJokes); // Mostrar el contenido del array en la consola
+            const currentJokeIndex = reportJokes.findIndex(report => report.joke === jokeText);
+            const joke = currentJokeIndex !== -1 ? reportJokes[currentJokeIndex] : null; //verificar si el chiste actual ya existe en el array reportJokes
+            if (joke) {
+                joke.score = score; //asigno el valor de score
+                console.log('Joke valorado:', joke);
+                console.log('Contenido del array reportJokes:', reportJokes);
+            }
+            else {
+                const date = new Date().toISOString();
+                const reportData = { joke: jokeText, score: score, date: date };
+                reportJokes.push(reportData); //hago push al array 
+                console.log('Joke valorado:', reportData);
+                console.log('Contenido del array reportJokes:', reportJokes);
+            }
         }
         else {
             throw new Error('No se encontró el elemento del joke en el DOM.');
@@ -169,20 +146,7 @@ function voteJoke(score) {
 function handleScoreButtonClick(score) {
     voteJoke(score); // Votar el chiste con la puntuación proporcionada
 }
-// Asignar funciones a los eventos de clic en los botones de puntuación
-/*const scoreButton1 = document.getElementById('score-button-1');
-const scoreButton2 = document.getElementById('score-button-2');
-const scoreButton3 = document.getElementById('score-button-3');
-
-if (scoreButton1) {
-    scoreButton1.onclick = () => handleScoreButtonClick(1);
-}
-if (scoreButton2) {
-    scoreButton2.onclick = () => handleScoreButtonClick(2);
-}
-if (scoreButton3) {
-    scoreButton3.onclick = () => handleScoreButtonClick(3);
-}*/
+// Función para asignar eventos a los botones de puntuación
 function assignScoreButtonEvents() {
     for (let i = 1; i <= 3; i++) {
         const scoreButton = document.getElementById(`score-button-${i}`);
@@ -195,38 +159,8 @@ function assignScoreButtonEvents() {
         nextJokeButton.onclick = showNextJoke;
     }
 }
-/* Función para mostrar un chiste en el DOM
-async function showDadJokeInDOM(joke?: string): Promise<void> {
-    try {
-        const jokeElement = document.getElementById('joke');
-        if (jokeElement && joke) { // Verificar si hay un elemento de chiste y si el chiste no es undefined
-            jokeElement.textContent = joke;
-        }
-    } catch (error) {
-        console.error("Failed to get and show dad joke:", error);
-    }
-}*/
-// Obtener un nuevo chiste y mostrarlo en el DOM al cargar la página
-/*async function getAndShowDadJoke(): Promise<void> {
-    try {
-        const response = await fetch('https://icanhazdadjoke.com/', {
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-        const data = await response.json();
-        if (data && data.joke) {
-            showDadJokeInDOM(data.joke);
-        } else {
-            throw new Error('Failed to fetch joke or joke is empty.');
-        }
-    } catch (error) {
-        console.error("Failed to fetch dad joke:", error);
-    }
-}
-
-// Llamar a la función para obtener y mostrar un chiste al cargar la página
-getAndShowDadJoke();*/
+//Ex4.
+//Weater info
 const API_KEY = 'c993b94e24ffc37cf8882f0070c4b1e6';
 const CITY = "Barcelona";
 function fetchWeather() {
@@ -260,21 +194,18 @@ function fetchWeather() {
         }
     });
 }
-fetchWeather();
-// Llamar a la función para cambiar el fondo
-/*const nextJokeButton = document.getElementById('next-joke-button');
-if (nextJokeButton) {
-    nextJokeButton.onclick = () => {
-        showNextJoke(); // Llama a la función showNextJoke() que a su vez llama a changeBackground()
-        changeBackground(); // Llama a la función changeBackground() cuando se hace clic en el botón "Següent acudit"
-    };
-}*/
+//fetchWeather();
 document.addEventListener("DOMContentLoaded", function (event) {
     // Este código se ejecutará cuando el DOM esté completamente cargado
-    // Puedes colocar aquí el código que intenta acceder al elemento 'weather-icon'
+    try {
+        showNextJoke();
+        changeBackground();
+    }
+    catch (error) {
+        console.error("Failed to show initial joke:", error);
+    }
     const weatherIcon = document.getElementById('weather-icon');
     if (weatherIcon) {
-        // Aquí puedes realizar cualquier acción que necesites con el elemento 'weather-icon'
         console.log('El elemento weather-icon se encontró en el DOM.');
     }
     else {
@@ -282,5 +213,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
     assignScoreButtonEvents();
     fetchWeather();
-    changeBackground();
+    //changeBackground();
 });

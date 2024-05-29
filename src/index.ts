@@ -6,7 +6,7 @@ interface Joke {
 
 interface JokeReport {
     joke: string;
-    score: number;
+    score?: number;
     date: string;
 }
 
@@ -107,20 +107,29 @@ async function showJokeInDOM(joke?: Joke) {
 
 //EX3.
 // Array para almacenar los datos de los chistes valorados
+
 let reportJokes: JokeReport[] = [];
 
-// Función para manejar la votación de un chiste
-function voteJoke(score: number): void {
+//Función que vota los chistes
+function voteJoke(score: number) {
     try {
-        // Obtener el chiste actual del DOM
-        const jokeElement = document.getElementById('joke');
+        const jokeElement = document.getElementById('joke'); //obtener el joke
         if (jokeElement) {
             const jokeText = jokeElement.textContent || '';
-            const date = new Date().toISOString(); // Obtener la fecha en formato ISO
-            const reportData: JokeReport = { joke: jokeText, score: score, date: date }; // Crear el objeto de reporte
-            reportJokes.push(reportData); // Agregar el objeto al array reportJokes
-            console.log('Joke valorado:', reportData); // Mostrar el reporte en la consola
-            console.log('Contenido del array reportJokes:', reportJokes); // Mostrar el contenido del array en la consola
+            const currentJokeIndex = reportJokes.findIndex(report => report.joke === jokeText); 
+            const joke = currentJokeIndex !== -1 ? reportJokes[currentJokeIndex] : null; //verificar si el chiste actual ya existe en el array reportJokes
+
+            if (joke) {
+                joke.score = score;//asigno el valor de score
+                console.log('Joke valorado:', joke);
+                console.log('Contenido del array reportJokes:', reportJokes);
+            } else {
+                const date = new Date().toISOString();
+                const reportData: JokeReport = { joke: jokeText, score: score, date: date };
+                reportJokes.push(reportData); //hago push al array 
+                console.log('Joke valorado:', reportData);
+                console.log('Contenido del array reportJokes:', reportJokes);
+            }
         } else {
             throw new Error('No se encontró el elemento del joke en el DOM.');
         }
@@ -129,12 +138,13 @@ function voteJoke(score: number): void {
     }
 }
 
+
 //Función para manejar el clic en un botón de puntuación
 function handleScoreButtonClick(score: number): void {
     voteJoke(score); // Votar el chiste con la puntuación proporcionada
 }
 
-
+// Función para asignar eventos a los botones de puntuación
 function assignScoreButtonEvents() {
     for (let i = 1; i <= 3; i++) {
         const scoreButton = document.getElementById(`score-button-${i}`);
@@ -147,6 +157,9 @@ function assignScoreButtonEvents() {
         nextJokeButton.onclick = showNextJoke;
     }
 }
+
+
+
 
 //Ex4.
 //Weater info
